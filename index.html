@@ -41,7 +41,7 @@ h1 em{font-style:normal;color:var(--accent)}
 .demo:nth-of-type(even){grid-template-columns:1fr minmax(260px,340px)}
 .demo:nth-of-type(even) .media{order:2}
 .media{justify-self:center;width:100%;max-width:340px;padding:10px;background:var(--surface);border:1px solid var(--line);border-radius:36px;box-shadow:0 30px 60px -30px rgba(24,33,47,.35),0 8px 20px -12px rgba(24,33,47,.15)}
-.media video{display:block;width:100%;aspect-ratio:9/16;max-height:82vh;object-fit:contain;background:#0e1623;border-radius:26px}
+.media video,.media iframe{display:block;width:100%;aspect-ratio:9/16;max-height:82vh;object-fit:contain;background:#0e1623;border:0;border-radius:26px}
 .num{font:600 1rem Fraunces,Georgia,serif;color:var(--accent);letter-spacing:.08em}
 .tag{display:inline-block;margin-left:10px;padding:4px 12px;border-radius:99px;background:var(--tint);color:var(--accent);font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
 .info h2{font:600 clamp(1.7rem,3.2vw,2.5rem)/1.2 Fraunces,Georgia,serif;letter-spacing:-.01em;margin:16px 0 14px;text-wrap:balance}
@@ -98,20 +98,27 @@ const DEMOS = [
   { tag:"Multilingual", title:"Bilingual phone answering service for global businesses",
     desc:"A voice agent that answers every call in the caller’s own language. It currently speaks Spanish and English, and can speak 90+ languages.",
     points:["Speaks Spanish and English today","Can be extended to 90+ languages","Answers each caller in their own language"],
-    video:"/_blob/e6726013e6b9b6df1404fc1f62be5926" },
+    video:"https://youtu.be/bxvPWIb2EU0" },
   { tag:"Healthcare", title:"HIPAA-compliant medical answering service powered by AI voice agents",
     desc:"Secure, 24/7 patient support that keeps lines open around the clock while protecting patient information.",
     points:["24/7 patient support","Reduces wait times","Prevents missed calls","HIPAA-compliant and protects PHI"],
-    video:"/_blob/4b5be10fa81c7503094a0b1559ed2f23" },
+    video:"https://youtu.be/3XTBXKIaNuk" },
   { tag:"Real Estate", title:"AI batch calling for real estate: scale outreach and book more appointments",
     desc:"Human-sounding AI agents that automate prospecting and lead generation, converting more leads at a fraction of the cost.",
     points:["Runs automatically each morning and calls new leads","Receives calls from previous customers","Books more appointments with natural AI voices"],
-    video:"/_blob/b13ccb35dd027239a2b8c10645d672ed" }
+    video:"https://youtu.be/eAh9n4L69cs" }
 ];
 /* ================================ */
+function player(u,title){
+  const m=u.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/);
+  if(m) return `<iframe src="https://www.youtube-nocookie.com/embed/${m[1]}?rel=0&modestbranding=1&playsinline=1" title="${title}" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+  const v=u.match(/vimeo\.com\/(\d+)/);
+  if(v) return `<iframe src="https://player.vimeo.com/video/${v[1]}" title="${title}" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+  return `<video src="${u}" controls preload="metadata" playsinline aria-label="${title}"></video>`;
+}
 document.getElementById('demos').innerHTML = DEMOS.map((d,i)=>`
   <article class="demo" id="demo-${i+1}">
-    <div class="media"><video src="${d.video}" controls preload="metadata" playsinline aria-label="${d.title}"></video></div>
+    <div class="media">${player(d.video,d.title)}</div>
     <div class="info">
       <div><span class="num">0${i+1}</span><span class="tag">${d.tag}</span></div>
       <h2>${d.title}</h2>
