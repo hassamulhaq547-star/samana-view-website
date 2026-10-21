@@ -77,6 +77,7 @@ footer{text-align:center;color:var(--muted);font-size:14px;padding-bottom:40px}
       <a href="#demo-1">Bilingual answering</a>
       <a href="#demo-2">Medical (HIPAA)</a>
       <a href="#demo-3">Real estate calling</a>
+      <a href="#demo-4">More demos</a>
     </nav>
   </header>
 
@@ -106,7 +107,11 @@ const DEMOS = [
   { tag:"Real Estate", title:"AI batch calling for real estate: scale outreach and book more appointments",
     desc:"Human-sounding AI agents that automate prospecting and lead generation, converting more leads at a fraction of the cost.",
     points:["Runs automatically each morning and calls new leads","Receives calls from previous customers","Books more appointments with natural AI voices"],
-    video:"https://youtu.be/eAh9n4L69cs" }
+    video:"https://youtu.be/eAh9n4L69cs" },
+  { tag:"Voice Agent", title:"AI virtual receptionist for law firms and lawyers",
+    desc:"Never miss a client call again. Elevate your law firm’s responsiveness with an AI-powered virtual receptionist designed for legal workflows.",
+    points:[],
+    video:"https://youtu.be/dqj7DGba0WM" }
 ];
 /* ================================ */
 function player(u,title){
@@ -123,7 +128,7 @@ document.getElementById('demos').innerHTML = DEMOS.map((d,i)=>`
       <div><span class="num">0${i+1}</span><span class="tag">${d.tag}</span></div>
       <h2>${d.title}</h2>
       <p>${d.desc}</p>
-      <ul class="points">${d.points.map(p=>`<li>${p}</li>`).join('')}</ul>
+      ${d.points.length?`<ul class="points">${d.points.map(p=>`<li>${p}</li>`).join('')}</ul>`:''}
     </div>
   </article>`).join('');
 document.getElementById('cta').href=CONTACT_LINK;
